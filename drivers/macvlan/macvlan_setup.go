@@ -103,7 +103,7 @@ func createVlanLink(parentName string) error {
 		}
 		// Bring the new netlink iface up
 		if err := ns.NlHandle().LinkSetUp(vlanLink); err != nil {
-			return fmt.Errorf("failed to enable %s the macvlan parent link %v", vlanLink.Name, err)
+			logrus.Warnf("failed to enable %s the macvlan parent link %v", vlanLink.Name, err)
 		}
 		logrus.Debugf("Added a vlan tagged netlink subinterface: %s with a vlan id: %d", parentName, vidInt)
 		return nil
@@ -177,7 +177,7 @@ func createDummyLink(dummyName, truncNetID string) error {
 	}
 	// bring the new netlink iface up
 	if err := ns.NlHandle().LinkSetUp(parentDummyLink); err != nil {
-		return fmt.Errorf("failed to enable %s the macvlan parent link: %v", dummyName, err)
+		logrus.Warnf("failed to enable %s the macvlan parent link: %v", dummyName, err)
 	}
 
 	return nil
